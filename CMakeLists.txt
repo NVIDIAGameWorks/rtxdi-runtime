@@ -1,14 +1,14 @@
 
 file(GLOB sources "src/*.cpp" "include/rtxdi/*")
 
-add_library(rtxdi-sdk STATIC EXCLUDE_FROM_ALL ${sources})
-target_include_directories(rtxdi-sdk PUBLIC include)
-set_target_properties(rtxdi-sdk PROPERTIES FOLDER "RTXDI SDK")
+add_library(rtxdi-runtime STATIC EXCLUDE_FROM_ALL ${sources})
+target_include_directories(rtxdi-runtime PUBLIC include)
+set_target_properties(rtxdi-runtime PROPERTIES FOLDER "RTXDI SDK")
 
 # Dependencies for the resampling compile tests
 file(GLOB shader_dependencies "${CMAKE_CURRENT_SOURCE_DIR}/include/rtxdi/*")
 
-cmake_dependent_option(RTXDI_SKIP_SHADER_VALIDATION "Skip shader compilation when building just the rtxdi-sdk project" OFF WIN32 OFF)
+cmake_dependent_option(RTXDI_SKIP_SHADER_VALIDATION "Skip shader compilation when building just the rtxdi-runtime project" OFF WIN32 OFF)
 
 if (NOT RTXDI_SKIP_SHADER_VALIDATION)
 
@@ -26,7 +26,7 @@ if (DONUT_WITH_DX12)
 		COMMAND ${DXC_PATH} -nologo -WX -Tcs_6_5 ${source_file} -Fo ${output_file} -I${CMAKE_CURRENT_SOURCE_DIR}/include
 	)
 
-	target_sources(rtxdi-sdk PRIVATE ${output_file})
+	target_sources(rtxdi-runtime PRIVATE ${output_file})
 
 endif()
 
@@ -45,7 +45,7 @@ if (DONUT_WITH_VULKAN)
 		COMMAND ${DXC_SPIRV_PATH} -nologo -WX -Tcs_6_5 -fspv-target-env=vulkan1.2 ${source_file} -Fo ${output_file} -I${CMAKE_CURRENT_SOURCE_DIR}/include
 	)
 
-	target_sources(rtxdi-sdk PRIVATE ${output_file})
+	target_sources(rtxdi-runtime PRIVATE ${output_file})
 
 endif()
 
@@ -65,7 +65,7 @@ if (NOT ${GLSLANG_PATH} STREQUAL "")
 			COMMAND ${GLSLANG_PATH} --target-env vulkan1.2 --quiet -S comp ${source_file} -o ${output_file} -I${CMAKE_CURRENT_SOURCE_DIR}/include
 		)
 
-		target_sources(rtxdi-sdk PRIVATE ${output_file})
+		target_sources(rtxdi-runtime PRIVATE ${output_file})
 
 	else()
 		message(WARNING "The GLSLANG_PATH variable points to a non-existent file: ${GLSLANG_PATH}")
