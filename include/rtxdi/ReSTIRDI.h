@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "ReSTIRDIParameters.h"
-#include "RTXDIUtils.h"
+#include "RtxdiUtils.h"
 
 namespace rtxdi
 {

@@ -11,6 +11,7 @@
 #include <rtxdi/RtxdiUtils.h>
 
 #include <algorithm>
+#include <cmath>
 
 namespace rtxdi
 {
