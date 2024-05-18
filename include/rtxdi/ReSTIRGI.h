@@ -12,7 +12,7 @@
 
 #include <stdint.h>
 #include "rtxdi/ReSTIRGIParameters.h"
-#include "rtxdi/RTXDIUtils.h"
+#include "rtxdi/RtxdiUtils.h"
 
 namespace rtxdi
 {
